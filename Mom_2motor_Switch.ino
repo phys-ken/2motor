@@ -2,7 +2,7 @@
 #define PIN_IN2 5
 #define PIN_VREF 3 // PWM
 
-int BUTTON = 8; // タクトスイッチからの入力を8ピンに割り当て
+int BUTTON = 8; // トグルスイッチからの入力を8ピンに割り当て
 int val = 0;
 int old_val = 0;
 int state = 0;
@@ -11,23 +11,16 @@ void setup()
 {
   pinMode(PIN_IN1, OUTPUT);
   pinMode(PIN_IN2, OUTPUT);
-  pinMode(BUTTON, INPUT_PULLUP); // タクトスイッチに繋いだピンを入力に設定
+  pinMode(BUTTON, INPUT_PULLUP); // トグルスイッチに繋いだピンを入力に設定
   Serial.begin(9600);
 }
 
 void loop()
 {
 
-  val = digitalRead(BUTTON);
+  val = digitalRead(BUTTON); //トグルスイッチ状態を読む
   Serial.println(val);
-  //valの値の変化をチェック
-  if ((val == HIGH) && (old_val == LOW))
-  {
-    state = 1 - state;
-    delay(10); //ハウジング対策
-  }
-  old_val = val;
-  if (state == 1)
+  if (val == 0)
   {
     //前進
     Serial.println("forward!");
